@@ -26,6 +26,7 @@ Results:
 - Production build passed.
 - Dev server started at `http://localhost:5173/` and Electron launch reached `start electron app`.
 - Cross-platform CI has been added at `.github/workflows/desktop-ci.yml` for `windows-latest` and `macos-latest`.
+- GitHub Actions run `26936095992` passed for both `windows-latest` and `macos-latest`: `https://github.com/abracadabra404/devbox-pro/actions/runs/26936095992`.
 
 ## Important Setup Notes
 
