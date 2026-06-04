@@ -11,5 +11,6 @@ Project handoff:
 - [Functional Specification](docs/features.md)
 - [Architecture](docs/architecture.md)
 - [Development](docs/development.md)
+- [Verification](docs/verification.md)
 - [Roadmap](docs/roadmap.md)
 - [Changelog](CHANGELOG.md)

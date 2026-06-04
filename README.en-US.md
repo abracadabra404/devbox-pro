@@ -122,6 +122,7 @@ git push -u origin main
 - [Functional Specification](docs/features.en-US.md)
 - [Architecture](docs/architecture.en-US.md)
 - [Development](docs/development.en-US.md)
+- [Verification](docs/verification.en-US.md)
 - [Roadmap](docs/roadmap.en-US.md)
 - [GitHub Setup](docs/github-setup.en-US.md)
 - [Changelog](CHANGELOG.en-US.md)

@@ -122,6 +122,7 @@ git push -u origin main
 - [功能说明](docs/features.zh-CN.md)
 - [架构说明](docs/architecture.zh-CN.md)
 - [开发说明](docs/development.zh-CN.md)
+- [验证说明](docs/verification.zh-CN.md)
 - [路线图](docs/roadmap.zh-CN.md)
 - [GitHub 设置](docs/github-setup.zh-CN.md)
 - [更新日志](CHANGELOG.zh-CN.md)

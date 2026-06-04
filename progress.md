@@ -25,6 +25,7 @@ Results:
 - TypeScript strict check passed.
 - Production build passed.
 - Dev server started at `http://localhost:5173/` and Electron launch reached `start electron app`.
+- Cross-platform CI has been added at `.github/workflows/desktop-ci.yml` for `windows-latest` and `macos-latest`.
 
 ## Important Setup Notes
 
@@ -58,6 +59,8 @@ Use it only if Electron runtime is missing after `pnpm install`.
   - Language index files remain at the original names.
 - Added functional specification documents under `docs/features.*.md`.
 - Added GitHub setup documents under `docs/github-setup.*.md`.
+- Added verification documents under `docs/verification.*.md`.
+- Added GitHub Actions workflow for Windows and macOS Phase 1 MVP checks.
 
 ## Next Recommended Task
 
