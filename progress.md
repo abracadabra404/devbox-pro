@@ -7,9 +7,10 @@ Last updated: 2026-06-04
 - Phase 1 foundation is implemented and committed.
 - Current branch: `main`.
 - Phase 1 foundation commit: `11b59b5 chore: initialize desktop app foundation`.
-- Remote: not configured yet. `git push` currently fails with `No configured push destination`.
+- Remote: `origin` is configured as `https://github.com/abracadabra404/devbox-pro.git`.
+- GitHub repository: public repo at `https://github.com/abracadabra404/devbox-pro`.
 - GitHub CLI: not installed in the current Windows environment.
-- GitHub plugin: available for GitHub repository/PR/issue workflows, but local repo creation and push still require an authenticated Git remote or `gh`.
+- GitHub plugin: available for GitHub profile/repository workflows. Repository creation was completed through GitHub API using the existing Git Credential Manager HTTPS credential.
 
 ## Verified Commands
 
@@ -80,6 +81,6 @@ Implementation focus:
 
 ## Known Blockers
 
-- No GitHub remote is configured.
-- `gh` is not installed, so `gh repo create devbox-pro --private --source=. --remote=origin --push` cannot run yet.
+- `gh` is not installed, so future CLI-based GitHub workflows need GitHub CLI installation or the existing HTTPS Git Credential Manager flow.
+- SSH push is not configured on this machine. `ssh -o BatchMode=yes -T git@github.com` returned `Permission denied (publickey)`.
 - Sensitive secret storage is still an interface only. Do not store real passwords in local JSON or committed files.
