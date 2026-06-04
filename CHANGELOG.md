@@ -1,6 +1,4 @@
-# Changelog
+# Changelog / 更新日志
 
-## 0.1.0
-
-- Initialize DevBox Pro desktop foundation.
-- Add Electron, React, TypeScript, Vite, typed IPC, base layout, and core data models.
+- [English](CHANGELOG.en-US.md)
+- [中文](CHANGELOG.zh-CN.md)
