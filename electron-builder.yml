@@ -1,0 +1,19 @@
+appId: com.devboxpro.desktop
+productName: DevBox Pro
+directories:
+  output: release
+  buildResources: build
+files:
+  - out/**
+asar: true
+mac:
+  category: public.app-category.developer-tools
+  target:
+    - dmg
+    - zip
+win:
+  target:
+    - nsis
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
