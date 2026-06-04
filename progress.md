@@ -28,6 +28,8 @@ Results:
 - Cross-platform CI has been added at `.github/workflows/desktop-ci.yml` for `windows-latest` and `macos-latest`.
 - GitHub Actions run `26936095992` passed for both `windows-latest` and `macos-latest`: `https://github.com/abracadabra404/devbox-pro/actions/runs/26936095992`.
 - Tagged release packaging workflow has been added at `.github/workflows/release.yml`.
+- Release `v0.1.0-alpha.1` has been published: `https://github.com/abracadabra404/devbox-pro/releases/tag/v0.1.0-alpha.1`.
+- Release assets include `DevBox.Pro.Setup.0.1.0.exe`, `DevBox.Pro-0.1.0-universal.dmg`, and `DevBox.Pro-0.1.0-universal-mac.zip`.
 
 ## Important Setup Notes
 
@@ -64,6 +66,7 @@ Use it only if Electron runtime is missing after `pnpm install`.
 - Added verification documents under `docs/verification.*.md`.
 - Added GitHub Actions workflow for Windows and macOS Phase 1 MVP checks.
 - Added GitHub Actions workflow for tagged installer packages and GitHub Releases.
+- Created and published tag `v0.1.0-alpha.1`.
 
 ## Next Recommended Task
 
