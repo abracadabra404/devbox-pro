@@ -27,6 +27,7 @@ Results:
 - Dev server started at `http://localhost:5173/` and Electron launch reached `start electron app`.
 - Cross-platform CI has been added at `.github/workflows/desktop-ci.yml` for `windows-latest` and `macos-latest`.
 - GitHub Actions run `26936095992` passed for both `windows-latest` and `macos-latest`: `https://github.com/abracadabra404/devbox-pro/actions/runs/26936095992`.
+- Tagged release packaging workflow has been added at `.github/workflows/release.yml`.
 
 ## Important Setup Notes
 
@@ -62,6 +63,7 @@ Use it only if Electron runtime is missing after `pnpm install`.
 - Added GitHub setup documents under `docs/github-setup.*.md`.
 - Added verification documents under `docs/verification.*.md`.
 - Added GitHub Actions workflow for Windows and macOS Phase 1 MVP checks.
+- Added GitHub Actions workflow for tagged installer packages and GitHub Releases.
 
 ## Next Recommended Task
 

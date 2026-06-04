@@ -49,6 +49,28 @@ pnpm exec electron --version
 
 这用于验证第一阶段基础工程在 Windows 和 macOS 上都能安装、校验和构建。
 
+## Tag 安装包构建
+
+GitHub Actions 工作流：
+
+```text
+.github/workflows/release.yml
+```
+
+推送 tag 后会构建未签名安装包，并发布到 GitHub Releases：
+
+```bash
+git tag v0.1.0-alpha.1
+git push origin v0.1.0-alpha.1
+```
+
+Release 资产：
+
+- Windows x64：NSIS `.exe` 安装包。
+- macOS universal：`.dmg` 和 `.zip` 包。
+
+当前安装包仅用于内部验证，因为还没有配置代码签名和 macOS notarization。
+
 ## 限制
 
 当前 CI 还没有做完整 UI 自动化和安装包签名验证。这些检查属于后续打包和端到端验证阶段。
