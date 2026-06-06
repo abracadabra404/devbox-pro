@@ -53,9 +53,12 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
       return;
     }
 
+    const closingIndex = state.tabs.findIndex((tab) => tab.id === tabId);
     const nextTabs = state.tabs.filter((tab) => tab.id !== tabId);
     const activeTabStillOpen = nextTabs.some((tab) => tab.id === state.activeTabId);
-    const nextActiveTab = activeTabStillOpen ? state.tabs.find((tab) => tab.id === state.activeTabId) : nextTabs[0];
+    const nextActiveTab = activeTabStillOpen
+      ? nextTabs.find((tab) => tab.id === state.activeTabId)
+      : chooseAdjacentTab(nextTabs, closingIndex);
 
     if (!nextActiveTab) {
       return;
@@ -101,6 +104,14 @@ function createId(): string {
   }
 
   return `tab-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+}
+
+export function chooseAdjacentTab(tabs: WorkspaceTab[], closingIndex: number): WorkspaceTab | undefined {
+  if (tabs.length === 0) {
+    return undefined;
+  }
+
+  return tabs[Math.min(Math.max(closingIndex, 0), tabs.length - 1)];
 }
 
 function defaultTabTitle(tool: ToolId): string {

@@ -11,6 +11,7 @@ pnpm dev
 
 ```bash
 pnpm lint
+pnpm test
 pnpm build
 ```
 
@@ -30,6 +31,18 @@ git add .
 git commit -m "phase message"
 git push
 ```
+
+## Handoff Documentation Rule
+
+After every handoff, validation pass, or development change, update the docs whenever you discover environment issues, verification results, bugs, behavior changes, completed modifications, or follow-up tasks.
+
+Update:
+
+- `progress.md`
+- the relevant `docs/*.zh-CN.md`
+- the relevant `docs/*.en-US.md`
+
+Record the concrete date, commands, pass/fail status, workaround, and the next tasks for the following Codex session.
 
 ## Adding IPC
 

@@ -1,6 +1,6 @@
 # 路线图
 
-## 第一阶段：工程基础
+## 第一阶段：工程基础 - 已完成
 
 - 桌面应用壳
 - 类型化 IPC
@@ -9,7 +9,7 @@
 - 深色开发者布局
 - 文档和仓库规范
 
-## 第二阶段：数据库 MVP
+## 第二阶段：数据库 MVP - 已完成
 
 - MySQL 连接管理
 - 连接测试
@@ -17,7 +17,12 @@
 - 结果表格
 - SQL 历史记录
 
-## 第三阶段：Redis MVP
+验证状态：
+
+- 2026-06-06 在 macOS arm64 完成单元测试、TypeScript strict 校验、生产构建、Electron runtime 冒烟和 Electron UI 验收。
+- 真实 MySQL 查询成功路径仍需要有效的本机 MySQL 凭据；成功路径已通过 fake adapter 单元测试覆盖。
+
+## 第三阶段：Redis MVP - 下一阶段
 
 - Redis 连接管理
 - Key 搜索

@@ -6,7 +6,7 @@ DevBox Pro 是一个跨平台 All-in-One 桌面开发者工具，面向 Java 后
 
 ## 当前状态
 
-第一阶段已完成：
+第二阶段 Database MVP 已完成：
 
 - Electron + React + TypeScript + Vite 桌面工程基础
 - Main / Preload / Renderer 分层
@@ -14,8 +14,12 @@ DevBox Pro 是一个跨平台 All-in-One 桌面开发者工具，面向 Java 后
 - 深色开发者工具布局
 - 左侧导航栏、中间资源面板、右侧 Tab 工作区
 - 共享数据模型
-- 协议 Adapter 接口骨架
-- 跨平台 Platform Service 骨架
+- MVP 阶段 JSON 本地配置存储
+- Electron `safeStorage` 密码引用流程
+- MySQL 连接配置创建
+- MySQL 连接测试
+- SQL 执行、结果表格、错误展示和 SQL 历史
+- Security、Database Service 和 Tab 行为单元测试
 - 文档基础
 
 ## 技术栈
@@ -71,6 +75,7 @@ pnpm rebuild electron
 
 ```bash
 pnpm lint
+pnpm test
 pnpm build
 ```
 

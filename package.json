@@ -11,10 +11,12 @@
     "preview": "electron-vite preview",
     "pack": "pnpm build && electron-builder --dir",
     "dist": "pnpm build && electron-builder",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "test": "vitest run"
   },
   "dependencies": {
     "lucide-react": "^0.468.0",
+    "mysql2": "^3.22.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "zustand": "^4.5.5"
@@ -28,6 +30,7 @@
     "electron-builder": "^25.1.8",
     "electron-vite": "^2.3.0",
     "typescript": "^5.7.2",
-    "vite": "^5.4.11"
+    "vite": "^5.4.11",
+    "vitest": "^2.1.9"
   }
 }

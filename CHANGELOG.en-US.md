@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+- Implement Database MVP with MySQL connection profiles, password references, connection testing, SQL execution, result table, and SQL history.
+- Add JSON-backed MVP storage, Electron `safeStorage` secret encryption, and typed database IPC/preload APIs.
+- Add Vitest unit tests for security service, database service, and tab-close behavior.
+- Improve renderer fallback when `window.devbox` is unavailable and activate adjacent tabs after closing the current tab.
+- Update handoff, verification, development, feature, architecture, roadmap, and README documentation.
+
 ## 0.1.0
 
 - Initialize DevBox Pro desktop foundation.

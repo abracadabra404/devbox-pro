@@ -6,7 +6,7 @@ It is planned as a lightweight combination of database client, Redis client, SSH
 
 ## Current Status
 
-Phase 1 is complete:
+Phase 2 Database MVP is complete:
 
 - Electron + React + TypeScript + Vite desktop foundation
 - Main/preload/renderer separation
@@ -14,8 +14,12 @@ Phase 1 is complete:
 - Dark developer-tool layout
 - Navigation rail, resource panel, and tab workspace
 - Shared data models
-- Protocol adapter interfaces
-- Cross-platform platform service skeleton
+- JSON-backed local storage for MVP configuration
+- Electron `safeStorage` password reference flow
+- MySQL connection profile creation
+- MySQL connection testing
+- SQL execution, result table, error display, and SQL history
+- Unit tests for security, database service, and tab behavior
 - Documentation foundation
 
 ## Tech Stack
@@ -71,6 +75,7 @@ pnpm rebuild electron
 
 ```bash
 pnpm lint
+pnpm test
 pnpm build
 ```
 

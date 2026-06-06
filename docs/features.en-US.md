@@ -23,7 +23,7 @@ The UI uses a compact developer-tool layout:
 
 ## Database Tool
 
-Initial support:
+Implemented in Database MVP:
 
 - MySQL connection profiles
 - Connection test
@@ -31,6 +31,12 @@ Initial support:
 - Result table
 - Query error display
 - SQL history
+- Passwords saved as encrypted secret records and referenced by `passwordRef`
+
+Acceptance notes:
+
+- Profile creation, password reference persistence, connection-test error display, SQL execution error handling, and SQL history were verified in the Electron app on macOS arm64.
+- A successful live query requires valid MySQL credentials. Unit tests cover the successful execute path with a fake adapter.
 
 Planned support:
 

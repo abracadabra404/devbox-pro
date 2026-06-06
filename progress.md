@@ -1,30 +1,50 @@
 # DevBox Pro Progress
 
-Last updated: 2026-06-04
+Last updated: 2026-06-06
 
 ## Current State
 
 - Phase 1 foundation is implemented and committed.
+- Phase 2 Database MVP is implemented locally on branch `codex/database-mvp`.
 - Current branch: `main`.
 - Phase 1 foundation commit: `11b59b5 chore: initialize desktop app foundation`.
 - Remote: `origin` is configured as `https://github.com/abracadabra404/devbox-pro.git`.
 - GitHub repository: public repo at `https://github.com/abracadabra404/devbox-pro`.
 - GitHub CLI: not installed in the current Windows environment.
 - GitHub plugin: available for GitHub profile/repository workflows. Repository creation was completed through GitHub API using the existing Git Credential Manager HTTPS credential.
+- Latest local handoff verification was completed on macOS arm64 on 2026-06-06.
+- Database MVP development, testing, and acceptance were completed on macOS arm64 on 2026-06-06.
+
+## Handoff Documentation Rule
+
+- Every future Codex handoff must update this file when it discovers validation results, environment issues, bugs, behavior changes, or follow-up tasks.
+- If the finding belongs to a specific topic, also update the matching document under `docs/` in both English and Chinese variants.
+- Keep command results concrete: include exact commands, pass/fail status, and any workaround needed to reproduce the verified state.
 
 ## Verified Commands
 
 ```bash
+ELECTRON_MIRROR=https://npmmirror.com/mirrors/electron/ corepack pnpm install --frozen-lockfile
 corepack pnpm lint
+corepack pnpm test
 corepack pnpm build
+corepack pnpm exec electron --version
 corepack pnpm dev
 ```
 
 Results:
 
+- Dependency installation passed with the Electron mirror above. A plain `corepack pnpm install --frozen-lockfile` stalled at Electron postinstall on this macOS machine and was stopped.
 - TypeScript strict check passed.
+- Unit tests passed: 3 files, 7 tests covering Security Service, Database Service, and tab-close behavior.
 - Production build passed.
+- Electron runtime smoke check passed outside the command sandbox: `v33.4.11`.
 - Dev server started at `http://localhost:5173/` and Electron launch reached `start electron app`.
+- Electron app UI smoke check passed: Settings IPC loaded `darwin arm64`, user data path, and logs path. Database, Redis, SSH, SFTP, Kafka, HTTP, JSON Tools, Logs, and Settings pages all opened without blank screens or app crashes.
+- Database MVP Electron UI acceptance passed: MySQL profile save, encrypted password reference display, connection-test error handling, and SQL failure history recording worked.
+- Local data inspection found only `passwordRef` and `encryptedValue`; the test password was not stored in plaintext.
+- Direct browser fallback for missing `window.devbox` was implemented after the earlier handoff finding. Browser Use later rejected `localhost:5173` by policy, so the post-fix browser-only check could not be repeated with that tool.
+- Closing the active tab now activates an adjacent tab instead of falling back to the first remaining tab.
 - Cross-platform CI has been added at `.github/workflows/desktop-ci.yml` for `windows-latest` and `macos-latest`.
 - GitHub Actions run `26936095992` passed for both `windows-latest` and `macos-latest`: `https://github.com/abracadabra404/devbox-pro/actions/runs/26936095992`.
 - Tagged release packaging workflow has been added at `.github/workflows/release.yml`.
@@ -35,14 +55,20 @@ Results:
 
 - `pnpm-lock.yaml` is committed.
 - `packageManager` is pinned to `pnpm@9.15.4`.
-- Electron postinstall needed the mirror below on this machine:
+- Electron postinstall may need the mirror below when the default Electron download stalls or fails:
+
+```bash
+ELECTRON_MIRROR=https://npmmirror.com/mirrors/electron/ corepack pnpm install --frozen-lockfile
+```
+
+Windows PowerShell equivalent:
 
 ```powershell
 $env:ELECTRON_MIRROR='https://npmmirror.com/mirrors/electron/'
 corepack pnpm rebuild electron
 ```
 
-Use it only if Electron runtime is missing after `pnpm install`.
+Use the rebuild command only if Electron runtime is missing after dependency installation.
 
 ## Files Added In Phase 1
 
@@ -70,26 +96,33 @@ Use it only if Electron runtime is missing after `pnpm install`.
 
 ## Next Recommended Task
 
-Phase 2: Database MVP.
+Phase 2 Database MVP is complete. Recommended follow-ups before Phase 3:
+
+- Re-run UI acceptance against a real MySQL profile with valid credentials to confirm the live successful SQL path in Electron.
+- Add profile deletion/edit-confirmation UX before users accumulate test profiles.
+- Consider schema browsing and pagination before expanding beyond basic SQL execution.
+- Keep this file and the relevant `docs/*.en-US.md` / `docs/*.zh-CN.md` documents updated after every validation or implementation turn.
+
+After those follow-ups, proceed to Phase 3: Redis MVP.
 
 Suggested branch:
 
 ```bash
 git pull --rebase
-git checkout -b feature/database-mvp
+git checkout -b feature/redis-mvp
 ```
 
-Implementation focus:
+Phase 3 implementation focus:
 
-- Add MySQL connection profile UI.
-- Add secure password reference flow through `SecurityService`.
-- Add MySQL adapter using `mysql2`.
-- Add typed IPC for connection test and SQL execution.
-- Add SQL history persistence model.
-- Add result table and error display.
+- Redis connection management.
+- Key search.
+- String, Hash, and List viewing.
+- Delete key and set TTL.
 
 ## Known Blockers
 
 - `gh` is not installed, so future CLI-based GitHub workflows need GitHub CLI installation or the existing HTTPS Git Credential Manager flow.
 - SSH push is not configured on this machine. `ssh -o BatchMode=yes -T git@github.com` returned `Permission denied (publickey)`.
-- Sensitive secret storage is still an interface only. Do not store real passwords in local JSON or committed files.
+- Sensitive secret storage is implemented with Electron `safeStorage` for the local MVP. Continue avoiding real secrets in committed files and logs.
+- Electron GUI runtime checks may fail inside a restricted command sandbox with `SIGABRT`; rerun Electron runtime checks outside the sandbox before treating that as a product failure.
+- Successful live MySQL SQL execution was not accepted with real credentials on this machine because the local root credential test returned `Access denied`. Unit tests cover the successful adapter path.

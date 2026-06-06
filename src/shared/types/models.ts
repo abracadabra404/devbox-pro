@@ -26,6 +26,17 @@ export interface ConnectionProfile {
   updatedAt: string;
 }
 
+export interface SaveConnectionProfileInput {
+  id?: string;
+  name: string;
+  host: string;
+  port: number;
+  username: string;
+  password?: string;
+  database?: string;
+  extraConfig?: Record<string, unknown>;
+}
+
 export interface SensitiveSecret {
   id: string;
   profileId: string;
@@ -55,6 +66,28 @@ export interface SqlHistory {
   duration: number;
   success: boolean;
   errorMessage?: string;
+}
+
+export interface SqlColumn {
+  name: string;
+  dataType?: string;
+}
+
+export interface SqlExecutionResult {
+  profileId: string;
+  columns: SqlColumn[];
+  rows: Record<string, unknown>[];
+  duration: number;
+  affectedRows?: number;
+  executedAt: string;
+  historyId?: string;
+}
+
+export interface DatabaseConnectionTestResult {
+  profileId: string;
+  success: boolean;
+  message: string;
+  duration: number;
 }
 
 export interface AppSettings {

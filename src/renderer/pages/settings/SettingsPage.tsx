@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import type { AppPaths, PlatformInfo } from '@shared/types/platform';
+import { getDevboxApi } from '../../utils/devboxApi';
 import type { ToolPageProps } from '../types';
 
 export function SettingsPage({ tab }: ToolPageProps): JSX.Element {
@@ -7,13 +8,19 @@ export function SettingsPage({ tab }: ToolPageProps): JSX.Element {
   const [paths, setPaths] = useState<AppPaths | null>(null);
 
   useEffect(() => {
-    void window.devbox.app.getPlatformInfo().then((result) => {
+    const api = getDevboxApi();
+
+    if (!api) {
+      return;
+    }
+
+    void api.app.getPlatformInfo().then((result) => {
       if (result.ok) {
         setPlatform(result.data);
       }
     });
 
-    void window.devbox.app.getPaths().then((result) => {
+    void api.app.getPaths().then((result) => {
       if (result.ok) {
         setPaths(result.data);
       }

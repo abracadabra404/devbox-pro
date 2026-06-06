@@ -1,9 +1,13 @@
 import { app, BrowserWindow, shell } from 'electron';
 import path from 'node:path';
 import { registerIpcHandlers } from './handlers';
+import { createMySqlDatabaseAdapter } from './adapters/database/databaseAdapter';
 import { createPlatformService } from './platform/platformService';
 import { createConnectionService } from './services/connection/connectionService';
+import { createDatabaseService } from './services/database/databaseService';
 import { createSettingsService } from './services/settings/settingsService';
+import { createSecurityService } from './security/securityService';
+import { createStorageService } from './storage/storageService';
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -44,12 +48,20 @@ function createMainWindow(): void {
 
 function bootstrap(): void {
   const platformService = createPlatformService(app);
+  const storageService = createStorageService(app.getPath('userData'));
+  const securityService = createSecurityService(storageService);
   const connectionService = createConnectionService();
+  const databaseService = createDatabaseService({
+    adapter: createMySqlDatabaseAdapter(),
+    securityService,
+    storageService
+  });
   const settingsService = createSettingsService();
 
   registerIpcHandlers({
     platformService,
     connectionService,
+    databaseService,
     settingsService
   });
 }
