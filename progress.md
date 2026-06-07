@@ -10,13 +10,13 @@ Last updated: 2026-06-07
 - Phase 1 foundation commit: `11b59b5 chore: initialize desktop app foundation`.
 - Remote: `origin` is configured as `https://github.com/abracadabra404/devbox-pro.git`.
 - GitHub repository: public repo at `https://github.com/abracadabra404/devbox-pro`.
-- GitHub CLI: installed on this macOS session as `gh 2.87.3`, but `gh auth status` reports no logged-in GitHub hosts.
+- GitHub CLI: installed on this macOS session as `gh 2.87.3`; authenticated on 2026-06-07 as `abracadabra404` with HTTPS Git protocol.
 - GitHub plugin: available and reports push/admin permissions for `abracadabra404/devbox-pro`; local `git push` still uses this machine's Git credentials and can fail independently of plugin permissions.
 - Latest local handoff verification was completed on macOS arm64 on 2026-06-06.
 - Database MVP development, testing, and acceptance were completed on macOS arm64 on 2026-06-06.
 - Database MVP implementation commit: `428417a feat: implement database mvp`; Windows handoff documentation starts at `2e79294 docs: add windows handoff notes`. Check `git log --oneline -3` for the current local HEAD before publishing.
-- Publish blocker on 2026-06-07: `git push -u origin codex/database-mvp` failed with GitHub HTTPS 403, `Permission to abracadabra404/devbox-pro.git denied to abracadabra404`; `gh auth status` also showed no logged-in hosts.
-- Next handoff target: Windows Codex on 2026-06-08 should pull branch `codex/database-mvp` after the branch is published, re-run validation, and update the progress documents with any Windows-specific findings before starting the next MVP stage.
+- Publish blocker resolved on 2026-06-07: initial `git push -u origin codex/database-mvp` failed with GitHub HTTPS 403, then `gh auth login`, `gh auth setup-git`, and `git push -u origin codex/database-mvp` succeeded.
+- Next handoff target: Windows Codex on 2026-06-08 should pull branch `codex/database-mvp`, re-run validation, and update the progress documents with any Windows-specific findings before starting the next MVP stage.
 
 ## Handoff Documentation Rule
 
@@ -99,19 +99,7 @@ Use the rebuild command only if Electron runtime is missing after dependency ins
 
 ## Windows Codex Handoff
 
-For the 2026-06-08 Windows Codex session, start from the Database MVP branch:
-
-Before the Windows session can pull it from GitHub, the local branch must be published. The current macOS machine has the commits locally, but GitHub HTTPS push is blocked by credentials until one of these succeeds:
-
-```bash
-gh auth login
-gh auth setup-git
-git push -u origin codex/database-mvp
-```
-
-or refresh the Git Credential Manager / macOS Keychain credential for `github.com`, then retry `git push -u origin codex/database-mvp`.
-
-After the remote branch exists, Windows can continue with:
+For the 2026-06-08 Windows Codex session, start from the published Database MVP branch:
 
 ```bash
 git fetch origin
@@ -173,8 +161,7 @@ Phase 3 implementation focus:
 
 ## Known Blockers
 
-- `gh` is installed on this macOS session but not authenticated. Run `gh auth login` and `gh auth setup-git`, or refresh the Git Credential Manager HTTPS credential, before trying to publish local branches from this machine.
-- `git push -u origin codex/database-mvp` failed on 2026-06-07 with GitHub HTTPS 403: `Permission to abracadabra404/devbox-pro.git denied to abracadabra404`.
+- GitHub publishing was unblocked on 2026-06-07 by running `gh auth login`, `gh auth setup-git`, and `git push -u origin codex/database-mvp`. If future pushes fail again, re-check `gh auth status` and the Git Credential Manager / macOS Keychain credential for `github.com`.
 - SSH push is not configured on this machine. `ssh -o BatchMode=yes -T git@github.com` returned `Permission denied (publickey)`.
 - Sensitive secret storage is implemented with Electron `safeStorage` for the local MVP. Continue avoiding real secrets in committed files and logs.
 - Electron GUI runtime checks may fail inside a restricted command sandbox with `SIGABRT`; rerun Electron runtime checks outside the sandbox before treating that as a product failure.

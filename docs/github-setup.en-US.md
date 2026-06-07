@@ -4,7 +4,7 @@
 
 The Codex GitHub plugin helps Codex inspect GitHub repositories, issues, pull requests, comments, checks, and PR metadata. For local publishing, local `git push` still depends on this machine's Git/gh authentication state.
 
-In the 2026-06-07 macOS session, the GitHub plugin reports push/admin permissions for `abracadabra404/devbox-pro`, but local HTTPS Git credentials can still fail independently. This machine has `gh 2.87.3` installed, but `gh auth status` reports no logged-in GitHub hosts.
+In the 2026-06-07 macOS session, the GitHub plugin reports push/admin permissions for `abracadabra404/devbox-pro`, but local HTTPS Git credentials can still fail independently. This machine has `gh 2.87.3` installed, and `gh auth login` has authenticated as `abracadabra404`.
 
 ## Bind Your Personal GitHub Account
 
@@ -26,7 +26,7 @@ If Git should use the credential from gh:
 gh auth setup-git
 ```
 
-## Current Publish Blocker
+## Resolved Publish Blocker
 
 On 2026-06-07, macOS ran:
 
@@ -41,9 +41,20 @@ remote: Permission to abracadabra404/devbox-pro.git denied to abracadabra404.
 fatal: unable to access 'https://github.com/abracadabra404/devbox-pro.git/': The requested URL returned error: 403
 ```
 
-Resolution options:
+Resolution executed:
 
-- Run `gh auth login` and `gh auth setup-git`, then retry the push.
+```bash
+gh auth login
+gh auth setup-git
+git push -u origin codex/database-mvp
+```
+
+Result: `codex/database-mvp` was pushed to `origin` successfully, and the local branch now tracks the remote branch.
+
+If a similar issue returns:
+
+- Run `gh auth status` first.
+- Re-run `gh auth login` and `gh auth setup-git` if needed.
 - Or refresh the Git Credential Manager / macOS Keychain HTTPS credential for `github.com`.
 - If using SSH, configure a writable GitHub SSH key first.
 

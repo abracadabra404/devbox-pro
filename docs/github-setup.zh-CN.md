@@ -4,7 +4,7 @@
 
 Codex 的 GitHub 插件可以帮助 Codex 查看 GitHub 仓库、Issue、Pull Request、评论、检查状态和 PR 元数据。对于本地代码发布，本地 `git push` 仍然依赖本机 Git/gh 认证状态。
 
-2026-06-07 的 macOS 会话中，GitHub 插件显示对 `abracadabra404/devbox-pro` 有 push/admin 权限，但本地 HTTPS Git 凭据仍然可能独立失败。本机已安装 `gh 2.87.3`，但 `gh auth status` 显示未登录任何 GitHub hosts。
+2026-06-07 的 macOS 会话中，GitHub 插件显示对 `abracadabra404/devbox-pro` 有 push/admin 权限，但本地 HTTPS Git 凭据仍然可能独立失败。本机已安装 `gh 2.87.3`，并已通过 `gh auth login` 登录为 `abracadabra404`。
 
 ## 绑定你的 GitHub 个人账号
 
@@ -26,7 +26,7 @@ gh auth status
 gh auth setup-git
 ```
 
-## 当前发布阻塞记录
+## 已解决的发布阻塞记录
 
 2026-06-07 在 macOS 上执行：
 
@@ -41,9 +41,20 @@ remote: Permission to abracadabra404/devbox-pro.git denied to abracadabra404.
 fatal: unable to access 'https://github.com/abracadabra404/devbox-pro.git/': The requested URL returned error: 403
 ```
 
-处理方式：
+已执行的处理方式：
 
-- 先运行 `gh auth login` 和 `gh auth setup-git`，再重试推送。
+```bash
+gh auth login
+gh auth setup-git
+git push -u origin codex/database-mvp
+```
+
+结果：`codex/database-mvp` 已成功推送到 `origin`，并设置为本地分支 upstream。
+
+如果后续再次遇到类似问题：
+
+- 先运行 `gh auth status`。
+- 必要时重新运行 `gh auth login` 和 `gh auth setup-git`。
 - 或刷新 Git Credential Manager / macOS Keychain 中 `github.com` 的 HTTPS 凭据。
 - 如果改用 SSH，需要先配置可写 GitHub SSH key。
 
