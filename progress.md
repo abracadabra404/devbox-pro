@@ -1,12 +1,12 @@
 # DevBox Pro Progress
 
-Last updated: 2026-06-06
+Last updated: 2026-06-07
 
 ## Current State
 
 - Phase 1 foundation is implemented and committed.
-- Phase 2 Database MVP is implemented locally on branch `codex/database-mvp`.
-- Current branch: `main`.
+- Phase 2 Database MVP is implemented and committed on branch `codex/database-mvp`.
+- Current branch: `codex/database-mvp`.
 - Phase 1 foundation commit: `11b59b5 chore: initialize desktop app foundation`.
 - Remote: `origin` is configured as `https://github.com/abracadabra404/devbox-pro.git`.
 - GitHub repository: public repo at `https://github.com/abracadabra404/devbox-pro`.
@@ -14,6 +14,7 @@ Last updated: 2026-06-06
 - GitHub plugin: available for GitHub profile/repository workflows. Repository creation was completed through GitHub API using the existing Git Credential Manager HTTPS credential.
 - Latest local handoff verification was completed on macOS arm64 on 2026-06-06.
 - Database MVP development, testing, and acceptance were completed on macOS arm64 on 2026-06-06.
+- Next handoff target: Windows Codex on 2026-06-08 should pull branch `codex/database-mvp`, re-run validation, and update the progress documents with any Windows-specific findings before starting the next MVP stage.
 
 ## Handoff Documentation Rule
 
@@ -93,6 +94,43 @@ Use the rebuild command only if Electron runtime is missing after dependency ins
 - Added GitHub Actions workflow for Windows and macOS Phase 1 MVP checks.
 - Added GitHub Actions workflow for tagged installer packages and GitHub Releases.
 - Created and published tag `v0.1.0-alpha.1`.
+
+## Windows Codex Handoff
+
+For the 2026-06-08 Windows Codex session, start from the Database MVP branch:
+
+```bash
+git fetch origin
+git checkout codex/database-mvp
+git pull --rebase
+```
+
+If the branch is not available locally yet:
+
+```bash
+git checkout -b codex/database-mvp origin/codex/database-mvp
+```
+
+First validation pass on Windows should run:
+
+```bash
+corepack pnpm install --frozen-lockfile
+corepack pnpm lint
+corepack pnpm test
+corepack pnpm build
+corepack pnpm exec electron --version
+corepack pnpm dev
+```
+
+Then manually verify the Database MVP flow:
+
+- Create or edit a MySQL profile.
+- Confirm the password field clears after save and only `passwordRef` is shown in the UI.
+- Test invalid credentials and confirm the error is displayed without crashing.
+- Test valid MySQL credentials if available and run `select 1 as health_check;`.
+- Confirm SQL result rendering and SQL history persistence after app restart.
+
+Any Windows-specific install issue, Electron runtime behavior, UI bug, or database validation result must be added to this file and to both `docs/verification.en-US.md` and `docs/verification.zh-CN.md`.
 
 ## Next Recommended Task
 

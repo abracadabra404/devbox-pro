@@ -32,6 +32,24 @@ git commit -m "阶段说明"
 git push
 ```
 
+## 跨设备接手
+
+2026-06-08 Windows Codex 接手 Database MVP 验证时，应先拉取当前阶段分支：
+
+```bash
+git fetch origin
+git checkout codex/database-mvp
+git pull --rebase
+```
+
+如果本地还没有该分支：
+
+```bash
+git checkout -b codex/database-mvp origin/codex/database-mvp
+```
+
+接手后先执行 `pnpm lint`、`pnpm test`、`pnpm build` 和 Electron 启动验证，再决定是否进入下一阶段开发。
+
 ## 交接文档规则
 
 每次接手、验证或开发后，如果发现了环境问题、验证结果、bug、行为变化、已完成修改或后续任务，必须同步更新：

@@ -32,6 +32,24 @@ git commit -m "phase message"
 git push
 ```
 
+## Cross-Machine Handoff
+
+For the 2026-06-08 Windows Codex Database MVP verification pass, start from the current phase branch:
+
+```bash
+git fetch origin
+git checkout codex/database-mvp
+git pull --rebase
+```
+
+If the branch does not exist locally yet:
+
+```bash
+git checkout -b codex/database-mvp origin/codex/database-mvp
+```
+
+After checkout, run `pnpm lint`, `pnpm test`, `pnpm build`, and Electron startup validation before deciding whether to start the next development phase.
+
 ## Handoff Documentation Rule
 
 After every handoff, validation pass, or development change, update the docs whenever you discover environment issues, verification results, bugs, behavior changes, completed modifications, or follow-up tasks.

@@ -82,6 +82,34 @@ Residual acceptance note:
 - A successful live SQL execution in the UI requires valid MySQL credentials. The successful execution path is covered by unit tests with a fake adapter.
 - Browser-only renderer validation could not be repeated after the fix because Browser Use rejected `localhost:5173` by policy. The renderer now has a `window.devbox` fallback in code.
 
+## Windows Codex Handoff Verification Plan
+
+When the company Windows Codex session resumes on 2026-06-08, pull and stay on branch `codex/database-mvp` first. Do not start the next MVP phase before validating the Database MVP on Windows.
+
+Recommended commands:
+
+```bash
+git fetch origin
+git checkout codex/database-mvp
+git pull --rebase
+corepack pnpm install --frozen-lockfile
+corepack pnpm lint
+corepack pnpm test
+corepack pnpm build
+corepack pnpm exec electron --version
+corepack pnpm dev
+```
+
+Manual acceptance focus:
+
+- The Database page opens and the layout has no obvious breakage.
+- A MySQL profile can be saved; after save, the password field clears and the UI only shows `passwordRef`.
+- Invalid MySQL credentials show a connection or SQL error without crashing the app.
+- If valid MySQL credentials are available, run `select 1 as health_check;` and confirm the result table and SQL history both work.
+- After restarting the app, confirm profiles and SQL history are still loaded.
+
+Any Windows-specific installation, runtime, UI, database connection, or SQL history finding must be reflected in `progress.md`, this file, and `docs/verification.zh-CN.md`.
+
 ## Cross-Platform CI
 
 GitHub Actions workflow:

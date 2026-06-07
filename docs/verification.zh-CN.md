@@ -82,6 +82,34 @@ corepack pnpm dev
 - UI 中真实 SQL 执行成功路径需要有效 MySQL 凭据；成功路径已通过 fake adapter 单元测试覆盖。
 - 修复后本轮 Browser Use 因策略拒绝访问 `localhost:5173`，无法重复浏览器直开验证；代码中已加入 `window.devbox` 缺失兜底。
 
+## Windows Codex 接手验证计划
+
+2026-06-08 公司 Windows 版 Codex 接手时，先拉取并停留在 `codex/database-mvp` 分支，不要直接进入下一阶段 MVP。
+
+建议执行：
+
+```bash
+git fetch origin
+git checkout codex/database-mvp
+git pull --rebase
+corepack pnpm install --frozen-lockfile
+corepack pnpm lint
+corepack pnpm test
+corepack pnpm build
+corepack pnpm exec electron --version
+corepack pnpm dev
+```
+
+手工验收重点：
+
+- Database 页面可打开，布局无明显错位。
+- MySQL profile 可保存，保存后密码输入框清空，UI 只展示 `passwordRef`。
+- 无效 MySQL 凭据应展示连接或 SQL 错误，应用不能崩溃。
+- 如果有有效 MySQL 凭据，执行 `select 1 as health_check;`，确认结果表格和 SQL 历史都正常。
+- 重启应用后确认 profile 和 SQL 历史仍能读取。
+
+Windows 下发现的安装、运行、UI、数据库连接或 SQL 历史问题，必须同步更新 `progress.md`、本文件和 `docs/verification.en-US.md`。
+
 ## 跨平台 CI
 
 GitHub Actions 工作流：
