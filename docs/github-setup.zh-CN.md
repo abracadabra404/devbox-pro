@@ -2,9 +2,9 @@
 
 ## GitHub 插件能做什么
 
-Codex 的 GitHub 插件可以帮助 Codex 查看 GitHub 仓库、Issue、Pull Request、评论、检查状态和 PR 元数据。对于本地代码发布，插件流程仍然依赖本地 Git 状态和已经认证的 GitHub 远端。
+Codex 的 GitHub 插件可以帮助 Codex 查看 GitHub 仓库、Issue、Pull Request、评论、检查状态和 PR 元数据。对于本地代码发布，本地 `git push` 仍然依赖本机 Git/gh 认证状态。
 
-当前环境没有暴露可直接创建仓库的 GitHub 工具，并且本机没有安装 `gh`。因此，首次创建仓库和推送需要通过 GitHub CLI 或在 GitHub 页面手动完成。
+2026-06-07 的 macOS 会话中，GitHub 插件显示对 `abracadabra404/devbox-pro` 有 push/admin 权限，但本地 HTTPS Git 凭据仍然可能独立失败。本机已安装 `gh 2.87.3`，但 `gh auth status` 显示未登录任何 GitHub hosts。
 
 ## 绑定你的 GitHub 个人账号
 
@@ -19,6 +19,33 @@ gh auth status
 ```
 
 选择 GitHub.com，根据你的本地习惯选择 HTTPS 或 SSH，并完成浏览器授权。
+
+如果需要让 Git 使用 gh 登录后的凭据：
+
+```bash
+gh auth setup-git
+```
+
+## 当前发布阻塞记录
+
+2026-06-07 在 macOS 上执行：
+
+```bash
+git push -u origin codex/database-mvp
+```
+
+失败结果：
+
+```text
+remote: Permission to abracadabra404/devbox-pro.git denied to abracadabra404.
+fatal: unable to access 'https://github.com/abracadabra404/devbox-pro.git/': The requested URL returned error: 403
+```
+
+处理方式：
+
+- 先运行 `gh auth login` 和 `gh auth setup-git`，再重试推送。
+- 或刷新 Git Credential Manager / macOS Keychain 中 `github.com` 的 HTTPS 凭据。
+- 如果改用 SSH，需要先配置可写 GitHub SSH key。
 
 ## 使用 GitHub CLI 创建并推送
 

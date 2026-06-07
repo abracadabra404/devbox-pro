@@ -50,6 +50,16 @@ git checkout -b codex/database-mvp origin/codex/database-mvp
 
 After checkout, run `pnpm lint`, `pnpm test`, `pnpm build`, and Electron startup validation before deciding whether to start the next development phase.
 
+Note: on 2026-06-07, the macOS machine had the Database MVP commits locally, but `git push -u origin codex/database-mvp` was rejected with a GitHub HTTPS 403, and `gh auth status` reported no logged-in hosts. Before cross-machine handoff, publish the branch from an environment with write credentials:
+
+```bash
+gh auth login
+gh auth setup-git
+git push -u origin codex/database-mvp
+```
+
+Alternatively, refresh the Git Credential Manager / macOS Keychain credential for `github.com` and retry the push.
+
 ## Handoff Documentation Rule
 
 After every handoff, validation pass, or development change, update the docs whenever you discover environment issues, verification results, bugs, behavior changes, completed modifications, or follow-up tasks.

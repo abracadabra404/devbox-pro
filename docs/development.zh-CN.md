@@ -50,6 +50,16 @@ git checkout -b codex/database-mvp origin/codex/database-mvp
 
 接手后先执行 `pnpm lint`、`pnpm test`、`pnpm build` 和 Electron 启动验证，再决定是否进入下一阶段开发。
 
+注意：2026-06-07 macOS 本机已完成 Database MVP 本地提交，但 `git push -u origin codex/database-mvp` 因 GitHub HTTPS 403 被拒绝，`gh auth status` 也显示未登录。跨设备接手前，必须先在有写权限的环境运行：
+
+```bash
+gh auth login
+gh auth setup-git
+git push -u origin codex/database-mvp
+```
+
+或者刷新本机 Git Credential Manager / macOS Keychain 里的 `github.com` 凭据后重新推送。
+
 ## 交接文档规则
 
 每次接手、验证或开发后，如果发现了环境问题、验证结果、bug、行为变化、已完成修改或后续任务，必须同步更新：
