@@ -156,6 +156,29 @@ Release assets:
 
 These packages are for internal validation only because code signing and notarization are not configured yet.
 
+## Windows Database MVP Local Package
+
+Validated on Windows on 2026-06-08 from branch `codex/database-mvp`:
+
+```powershell
+corepack pnpm install --frozen-lockfile
+corepack pnpm lint
+corepack pnpm test
+corepack pnpm build
+corepack pnpm exec electron-builder --win nsis --x64 --publish never --config.win.signAndEditExecutable=false
+```
+
+Results:
+
+- Dependency installation passed.
+- TypeScript strict check passed.
+- Unit tests passed: 3 files, 7 tests.
+- Production build passed.
+- Local installer output: `release/DevBox Pro Setup 0.1.0.exe`.
+- SHA256: `24789AD52B78BF8E77F885515FFA1B9C7803AF3B1CEDAAD36A54879CE5D7F574`.
+
+The local package disables Windows executable resource editing because this machine could not extract electron-builder's `winCodeSign` symlinks without elevated Windows symlink privileges. This package is suitable for functional validation, not final release signing validation.
+
 ## Limits
 
 The CI does not yet perform full visual UI automation or package signing. Those checks belong to later packaging and end-to-end verification phases.

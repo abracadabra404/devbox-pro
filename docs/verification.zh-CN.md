@@ -156,6 +156,29 @@ Release 资产：
 
 当前安装包仅用于内部验证，因为还没有配置代码签名和 macOS notarization。
 
+## Windows Database MVP 本地安装包
+
+已于 2026-06-08 在 Windows 上基于 `codex/database-mvp` 分支验证：
+
+```powershell
+corepack pnpm install --frozen-lockfile
+corepack pnpm lint
+corepack pnpm test
+corepack pnpm build
+corepack pnpm exec electron-builder --win nsis --x64 --publish never --config.win.signAndEditExecutable=false
+```
+
+结果：
+
+- 依赖安装通过。
+- TypeScript strict 校验通过。
+- 单元测试通过：3 个文件，7 个测试。
+- 生产构建通过。
+- 本地安装包输出：`release/DevBox Pro Setup 0.1.0.exe`。
+- SHA256：`24789AD52B78BF8E77F885515FFA1B9C7803AF3B1CEDAAD36A54879CE5D7F574`。
+
+该本地包禁用了 Windows 可执行文件资源编辑，因为当前机器在解压 electron-builder 的 `winCodeSign` 符号链接时缺少 Windows 符号链接权限。该安装包适合功能验收，不适合作为最终签名发布验收。
+
 ## 限制
 
 当前 CI 还没有做完整 UI 自动化和安装包签名验证。这些检查属于后续打包和端到端验证阶段。

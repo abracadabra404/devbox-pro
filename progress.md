@@ -1,6 +1,6 @@
 # DevBox Pro Progress
 
-Last updated: 2026-06-07
+Last updated: 2026-06-08
 
 ## Current State
 
@@ -14,6 +14,7 @@ Last updated: 2026-06-07
 - GitHub plugin: available and reports push/admin permissions for `abracadabra404/devbox-pro`; local `git push` still uses this machine's Git credentials and can fail independently of plugin permissions.
 - Latest local handoff verification was completed on macOS arm64 on 2026-06-06.
 - Database MVP development, testing, and acceptance were completed on macOS arm64 on 2026-06-06.
+- Windows validation and local installer packaging were completed on 2026-06-08 on branch `codex/database-mvp`.
 - Database MVP implementation commit: `428417a feat: implement database mvp`; Windows handoff documentation starts at `2e79294 docs: add windows handoff notes`. Check `git log --oneline -3` for the current local HEAD before publishing.
 - Publish blocker resolved on 2026-06-07: initial `git push -u origin codex/database-mvp` failed with GitHub HTTPS 403, then `gh auth login`, `gh auth setup-git`, and `git push -u origin codex/database-mvp` succeeded.
 - Next handoff target: Windows Codex on 2026-06-08 should pull branch `codex/database-mvp`, re-run validation, and update the progress documents with any Windows-specific findings before starting the next MVP stage.
@@ -41,6 +42,9 @@ Results:
 - TypeScript strict check passed.
 - Unit tests passed: 3 files, 7 tests covering Security Service, Database Service, and tab-close behavior.
 - Production build passed.
+- Windows 2026-06-08 validation passed: `corepack pnpm install --frozen-lockfile`, `corepack pnpm lint`, `corepack pnpm test`, and `corepack pnpm build`.
+- Windows local installer build passed with `corepack pnpm exec electron-builder --win nsis --x64 --publish never --config.win.signAndEditExecutable=false`.
+- Windows local installer output: `release/DevBox Pro Setup 0.1.0.exe`, size `84304700` bytes, SHA256 `24789AD52B78BF8E77F885515FFA1B9C7803AF3B1CEDAAD36A54879CE5D7F574`.
 - Electron runtime smoke check passed outside the command sandbox: `v33.4.11`.
 - Dev server started at `http://localhost:5173/` and Electron launch reached `start electron app`.
 - Electron app UI smoke check passed: Settings IPC loaded `darwin arm64`, user data path, and logs path. Database, Redis, SSH, SFTP, Kafka, HTTP, JSON Tools, Logs, and Settings pages all opened without blank screens or app crashes.
@@ -96,6 +100,7 @@ Use the rebuild command only if Electron runtime is missing after dependency ins
 - Added GitHub Actions workflow for Windows and macOS Phase 1 MVP checks.
 - Added GitHub Actions workflow for tagged installer packages and GitHub Releases.
 - Created and published tag `v0.1.0-alpha.1`.
+- Windows local Database MVP validation and installer packaging results were recorded on 2026-06-08.
 
 ## Windows Codex Handoff
 
@@ -166,3 +171,4 @@ Phase 3 implementation focus:
 - Sensitive secret storage is implemented with Electron `safeStorage` for the local MVP. Continue avoiding real secrets in committed files and logs.
 - Electron GUI runtime checks may fail inside a restricted command sandbox with `SIGABRT`; rerun Electron runtime checks outside the sandbox before treating that as a product failure.
 - Successful live MySQL SQL execution was not accepted with real credentials on this machine because the local root credential test returned `Access denied`. Unit tests cover the successful adapter path.
+- Windows local NSIS packaging may fail when electron-builder downloads `winCodeSign-2.6.0.7z`: the direct GitHub download timed out, and mirror download later failed to extract symlinks without sufficient Windows privileges. For unsigned local validation packages, use `--config.win.signAndEditExecutable=false`.
